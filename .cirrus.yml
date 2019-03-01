@@ -1,0 +1,5 @@
+container:
+  image: maven:3.6-jdk-8
+
+build_task:
+  build_script: mvn clean install
