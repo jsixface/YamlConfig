@@ -6,7 +6,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: $API_KEY
+    secure: EcZ4poVhcGsaYZC6t9+QcOhID1Shi6bLiJX01zqyPyYTJZGYyciv3KosehclbNAp55BQMJyzyQZfXOt/IDJ0IifHBlYtGgj9IvgugxmSko2dHA5HN7SAV32RjBgIZyjwYeGw5P0yC68y8E/TV8JH/3vcwMRMOmFg9iwsZPGe/XXHdnwwpiZ+9jTon+myJkJyNqWHASETEby/6uXozSuoBureGa3qi01vgbvxvun2tGdc7ej9hjCLTi00SshI21Rzk2dKJt9vEg/r2q8bFlrVc2ue5X8D820mrmgfRB7DqoUP+vHkijfObZoWzmtfiFMMdBKPxLh+By4+BIQJI8PHXjnYHTaMi5PUHf817vtTL2xvBsBa+TgEquj37eYHnqaAuzEnyh5pfZifCIM/4zFUu0URYIgEwOCyRNm26IgulzxxYv4f57dBrE88evq8xpz2WViVqSAHDGN4SZqlc4A7ySqcGi9G6QQzpc9nPMdZVi9cel5XC1iiGaMHV4zuaFV5Y9XRhtcUMIUIV0/wcZCRsTprg0t1sHgl/I0AIpWvnsaQqas6WRbj9GiCndlHjnQgkeatOqec6a1sWt6XGcf3L+nXzj9FEb/7iaa1hZtzy/vS1nxWq65gd/KKvd0ApkcigpOI+zZznbZLowNEnjOoChR0Ewp8+rz5Vce22O1+hJ0=
   file: target/yamlconfig*.jar
   skip_cleanup: true
   name: $project_version
