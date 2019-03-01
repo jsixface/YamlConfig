@@ -6,8 +6,9 @@ before_deploy:
 deploy:
   provider: releases
   api_key: $APIKEY
-  file: target/yamlconfig*.jar
+  file: target/yamlconfig-${project_version}.jar
   skip_cleanup: true
   name: $project_version
   on:
     repo: jsixface/YamlConfig
+    branch: master
