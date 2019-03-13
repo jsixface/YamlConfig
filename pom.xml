@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.jsixface</groupId>
     <artifactId>yamlconfig</artifactId>
-    <version>1.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>yamlconfig</name>
     <description>Manage configuration for java project in a YAML file and access them via dotted notation.</description>
