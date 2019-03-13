@@ -8,6 +8,9 @@
     <artifactId>yamlconfig</artifactId>
     <version>1.0</version>
 
+    <name>yamlconfig</name>
+    <description>Manage configuration for java project in a YAML file and access them via dotted notation.</description>
+    <url>https://github.com/jsixface/YamlConfig</url>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
