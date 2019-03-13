@@ -47,6 +47,13 @@ public class YamlConfig {
         return null;
     }
 
+    /**
+     * Gets the Integer value for the specified key from the config.
+     *
+     * @param key Key in dotted notation like <code>first.second[2].third</code>
+     * @return  The Integer value of property. <br ><code>null</code> if the key is not present
+     *          or not a leaf node.
+     */
     public Integer getInt(String key) {
         Object foundNode = getNode(key, content);
         if (foundNode instanceof Integer) {
