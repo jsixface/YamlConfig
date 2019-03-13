@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019 Arumugam Jeganathan
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.github.jsixface;
 
 import org.yaml.snakeyaml.Yaml;
@@ -17,6 +33,11 @@ public class YamlConfig {
     private YamlConfig() {
     }
 
+    /**
+     * Create configuration from Reader
+     * @param reader the reader to read config from
+     * @return YamlConfig instance
+     */
     public static YamlConfig load(Reader reader) {
         YamlConfig instance = new YamlConfig();
         Yaml yml = new Yaml();
@@ -24,6 +45,11 @@ public class YamlConfig {
         return instance;
     }
 
+    /**
+     * Create configuration from input stream
+     * @param in the Input stream to read from
+     * @return YamlConfig instance
+     */
     public static YamlConfig load(InputStream in) {
         YamlConfig instance = new YamlConfig();
         Yaml yml = new Yaml();
