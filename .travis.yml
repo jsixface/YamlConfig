@@ -18,4 +18,5 @@ deploy:
   name: $project_version
   on:
     repo: jsixface/YamlConfig
-    branch: master
+    tags: true
+

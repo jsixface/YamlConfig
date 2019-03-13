@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.jsixface</groupId>
     <artifactId>yamlconfig</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <licenses>
         <license>
@@ -24,7 +24,7 @@
     <distributionManagement>
         <site>
             <id>api.wiki</id>
-            <url>https://github.com/jsixface/YamlConfig/wiki</url>
+            <url>https://github.com/jsixface/YamlConfig/</url>
         </site>
         <snapshotRepository>
             <id>ossrh</id>
