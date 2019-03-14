@@ -15,16 +15,15 @@ jobs:
         - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
         - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
       script: mvn clean deploy -s .mvnsettings.xml -DskipTests=true -B -U -Prelease
-
-before_deploy:
-  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
-  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
-deploy:
-  provider: releases
-  api_key: $APIKEY
-  file: target/yamlconfig-${project_version}.jar
-  skip_cleanup: true
-  name: $project_version
-  on:
-    repo: jsixface/YamlConfig
-    tags: true
+      before_deploy:
+        - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+        - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+      deploy:
+        provider: releases
+        api_key: $APIKEY
+        file: target/yamlconfig-${project_version}.jar
+        skip_cleanup: true
+        name: $project_version
+        on:
+          repo: jsixface/YamlConfig
+          tags: true
