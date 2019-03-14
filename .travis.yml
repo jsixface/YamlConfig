@@ -4,7 +4,7 @@ sudo: false
 stages:
   - Testing
   - name: Deployment
-    if: branch = master AND (tag IS present)
+    if: tag IS present
 
 jobs:
   include:
@@ -27,5 +27,4 @@ deploy:
   name: $project_version
   on:
     repo: jsixface/YamlConfig
-    branch: master
-    condition: -n "$TRAVIS_TAG"
+    tags: true
