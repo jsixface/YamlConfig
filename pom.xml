@@ -8,6 +8,11 @@
     <artifactId>yamlconfig</artifactId>
     <version>1.0.1</version>
 
+    <properties>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    </properties>
+
     <name>yamlconfig</name>
     <description>Manage configuration for java project in a YAML file and access them via dotted notation.</description>
     <url>https://github.com/jsixface/YamlConfig</url>
@@ -52,7 +57,7 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.23</version>
+            <version>1.29</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -61,6 +66,22 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- set an environment property for the tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <environmentVariables>
+                        <DB_IMAGE>my db image env value</DB_IMAGE>
+                    </environmentVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <!-- Activate using the release property: mvn clean install -Prelease -->

@@ -58,6 +58,18 @@ public class YamlConfig {
     }
 
     /**
+     * Create configuration from input stream, using your yaml instance
+     * @param yaml the Yaml instance to use
+     * @param in the Input stream to read from
+     * @return YamlConfig instance
+     */
+    public static YamlConfig load(Yaml yaml, InputStream in) {
+        YamlConfig instance = new YamlConfig();
+        instance.content = yaml.load(in);
+        return instance;
+    }
+
+    /**
      * Gets the String value for the specified key from the config.
      *
      * @param key Key in dotted notation like <code>first.second[2].third</code>
