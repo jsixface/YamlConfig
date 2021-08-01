@@ -1,0 +1,12 @@
+version: 3
+key: "Quoted String"
+services:
+  db:
+    chained: someString
+    env_override: ${DB_IMAGE:-mysql}
+    env_unset_with_default: ${DB_CONTAINER_NAME:-mysql_db}
+    env_unset_noDefault: ${MISSING_ENV}
+  names:
+    - first: James
+      last: Justinson
+    - first: ${UNSET:-John}

@@ -1,9 +1,10 @@
 # YamlConfig
 [![Build Status](https://travis-ci.com/jsixface/YamlConfig.svg?branch=master)](https://travis-ci.com/jsixface/YamlConfig)
 
-[Yaml](https://en.wikipedia.org/wiki/YAML) is a data serialization format similar to JSON but more human readable. It is looks better to organize config in a YAML file since it makes sense to maintian some properties in a hierarchial manner.
+[Yaml](https://en.wikipedia.org/wiki/YAML) is a data serialization format similar to JSON but more human readable. 
+It looks better to organize config in a YAML file since it makes sense to maintain some properties in a hierarchical manner.
 
-**YamlConfig** helps in read configuration for a java project from a YAML config file and access them via dotted notation.
+**YamlConfig** helps read configuration for a java project from a YAML config file and access them via dotted notation.
 
 ## Features
   - Uses SnakeYAML for reading YAML, so it can handle any data recognizable by SnakeYAML.
@@ -18,11 +19,11 @@ If you use Maven for Dependency management, you can include this using below dep
 <dependency>
   <groupId>com.github.jsixface</groupId>
   <artifactId>yamlconfig</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 </dependency>
 ```
 
-## Usage
+## Usage - internal Yaml
 Get an instance of the YamlConfig by passing in a reader or an inputstream.
 
 ```
@@ -57,3 +58,31 @@ It can also be used to get through arrays like below:
 ```
 String value = config.getString("services.endpoint[1].host");
 ```
+
+## Usage - externally supplied Yaml
+As above, but with you supplying the Yaml instance, allowing Yaml to template environment variables to override yaml supplied values.
+
+```
+# externally managed and configured Yaml instance.
+Yaml yaml = new Yaml(new EnvScalarConstructor());
+yaml.addImplicitResolver(EnvScalarConstructor.ENV_TAG, EnvScalarConstructor.ENV_FORMAT, "$");
+
+# externally managed yml file
+InputStream resource = getClass()
+                         .getClassLoader()
+                         .getResourceAsStream("config.yml");
+                         
+# pass the lot to YamlConfig
+YamlConfig config = YamlConfig.load(yaml, resource);
+
+# and now you can use fully qualified dot notation keys:
+config.getString("service.db.someKey");
+```
+allowing `*.yml` files to contain `key: ${ENV_KEY:-defaultValue}` like this:
+```yaml
+services:
+  db:
+    someKey: ${SOME_KEY:-defaultValue}
+```
+see the test [YamlConfigWithEnvOverridesTest.java](src/test/java/com/github/jsixface/YamlConfigWithEnvOverridesTest.java)
+and its config file: [testWithEnvOverrides.yml](src/test/resources/testWithEnvOverrides.yml)
