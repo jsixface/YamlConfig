@@ -27,55 +27,52 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class YamlConfig {
+    private final YamlConfig instance;
+    private final Yaml yaml;
+    private final Pattern arrayKeyPattern = Pattern.compile("^([a-zA-Z][a-zA-Z0-9]+)\\[([0-9]+)]$");
     private Object content;
-    private Pattern arrayKeyPattern = Pattern.compile("^([a-zA-Z][a-zA-Z0-9]+)\\[([0-9]+)]$");
-
-    private YamlConfig() {
-    }
 
     /**
      * Create configuration from Reader
+     *
      * @param reader the reader to read config from
-     * @return YamlConfig instance
      */
-    public static YamlConfig load(Reader reader) {
-        YamlConfig instance = new YamlConfig();
-        Yaml yml = new Yaml();
-        instance.content = yml.load(reader);
-        return instance;
+    public YamlConfig(Reader reader) {
+        this.yaml = new Yaml();
+        this.content = yaml.load(reader);
     }
+
 
     /**
      * Create configuration from input stream
-     * @param in the Input stream to read from
-     * @return YamlConfig instance
+     *
+     * @param inputStream the Input stream to read from
      */
-    public static YamlConfig load(InputStream in) {
-        YamlConfig instance = new YamlConfig();
-        Yaml yml = new Yaml();
-        instance.content = yml.load(in);
-        return instance;
+    public YamlConfig(InputStream inputStream) {
+        this.yaml = new Yaml();
+        this.content = yaml.load(inputStream);
     }
 
     /**
      * Create configuration from input stream, using your yaml instance
-     * @param yaml the Yaml instance to use
-     * @param in the Input stream to read from
-     * @return YamlConfig instance
+     *
+     * @param yaml        the Yaml instance to use
+     * @param inputStream the Input stream to read from
      */
-    public static YamlConfig load(Yaml yaml, InputStream in) {
-        YamlConfig instance = new YamlConfig();
-        instance.content = yaml.load(in);
-        return instance;
+    public YamlConfig(Yaml yaml, InputStream inputStream) {
+        this.content = yaml.load(inputStream);
     }
 
     /**
      * Gets the String value for the specified key from the config.
      *
      * @param key Key in dotted notation like <code>first.second[2].third</code>
-     * @return  The String value of property. <br ><code>null</code> if the key is not present
-     *          or not a leaf node. <code>Boolean</code> or <code>Integer</code> or other format
-     *          are converted to String.
+     * @return The String value of property.
+     * <p>
+     * <code>null</code> if the key is not present
+     * or not a leaf node.
+     * <p>
+     * <code>Boolean</code> or <code>Integer</code> or another format is converted to String.
      */
     public String getString(String key) {
         Object foundNode = getNode(key, content);
@@ -89,8 +86,9 @@ public class YamlConfig {
      * Gets the Integer value for the specified key from the config.
      *
      * @param key Key in dotted notation like <code>first.second[2].third</code>
-     * @return  The Integer value of property. <br ><code>null</code> if the key is not present
-     *          or not a leaf node.
+     * @return The Integer value of property.
+     * <p>
+     * <code>null</code> if the key is not present or not a leaf node.
      */
     public Integer getInt(String key) {
         Object foundNode = getNode(key, content);
@@ -101,7 +99,7 @@ public class YamlConfig {
     }
 
     private Object getNode(String key, Object foundNode) {
-        String[] parts = decompose(key);
+        String[] parts = splitByDot(key);
         for (String part : parts) {
             int arrayNum = -1;
             Matcher matcher = arrayKeyPattern.matcher(part);
@@ -114,7 +112,7 @@ public class YamlConfig {
                     foundNode = ((Map) foundNode).get(part);
                     if (arrayNum >= 0) {
                         if (foundNode instanceof ArrayList
-                                && ((ArrayList) foundNode).size() > arrayNum) {
+                            && ((ArrayList) foundNode).size() > arrayNum) {
                             foundNode = ((ArrayList) foundNode).get(arrayNum);
                         } else
                             return null;
@@ -126,7 +124,13 @@ public class YamlConfig {
         return foundNode;
     }
 
-    private String[] decompose(String key) {
+    /**
+     * Splits a key by the dot character.
+     *
+     * @param key the key to split
+     * @return the split key path.
+     */
+    private String[] splitByDot(String key) {
         return key.split("\\.");
     }
 }
