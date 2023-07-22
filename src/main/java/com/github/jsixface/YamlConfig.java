@@ -27,10 +27,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class YamlConfig {
-    private final YamlConfig instance;
-    private final Yaml yaml;
     private final Pattern arrayKeyPattern = Pattern.compile("^([a-zA-Z][a-zA-Z0-9]+)\\[([0-9]+)]$");
-    private Object content;
+    private final Object content;
 
     /**
      * Create configuration from Reader
@@ -38,7 +36,7 @@ public class YamlConfig {
      * @param reader the reader to read config from
      */
     public YamlConfig(Reader reader) {
-        this.yaml = new Yaml();
+        final Yaml yaml = new Yaml();
         this.content = yaml.load(reader);
     }
 
@@ -49,7 +47,7 @@ public class YamlConfig {
      * @param inputStream the Input stream to read from
      */
     public YamlConfig(InputStream inputStream) {
-        this.yaml = new Yaml();
+        final Yaml yaml = new Yaml();
         this.content = yaml.load(inputStream);
     }
 
