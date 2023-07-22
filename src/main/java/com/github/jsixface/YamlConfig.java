@@ -73,7 +73,7 @@ public class YamlConfig {
      * <code>Boolean</code> or <code>Integer</code> or another format is converted to String.
      */
     public String getString(String key) {
-        Object foundNode = getNode(key, content);
+        Object foundNode = getNode(key);
         if (foundNode != null && !(foundNode instanceof Collection)) {
             return foundNode.toString();
         }
@@ -89,15 +89,23 @@ public class YamlConfig {
      * <code>null</code> if the key is not present or not a leaf node.
      */
     public Integer getInt(String key) {
-        Object foundNode = getNode(key, content);
+        Object foundNode = getNode(key);
         if (foundNode instanceof Integer) {
             return (Integer) foundNode;
         }
         return null;
     }
 
-    private Object getNode(String key, Object foundNode) {
-        String[] parts = splitByDot(key);
+    /**
+     * Goes through the file node by node until the desired key is found.
+     *
+     * @param key the key to find
+     * @return the found node or <code>null</code> if not found
+     */
+    private Object getNode(String key) {
+        final String[] parts = splitByDot(key);
+
+        Object foundNode = content;
         for (String part : parts) {
             int arrayNum = -1;
             Matcher matcher = arrayKeyPattern.matcher(part);
@@ -106,12 +114,12 @@ public class YamlConfig {
                 arrayNum = Integer.parseInt(matcher.group(2));
             }
             if (foundNode instanceof Map) {
-                if (((Map) foundNode).containsKey(part)) {
-                    foundNode = ((Map) foundNode).get(part);
+                if (((Map<?, ?>) foundNode).containsKey(part)) {
+                    foundNode = ((Map<?, ?>) foundNode).get(part);
                     if (arrayNum >= 0) {
                         if (foundNode instanceof ArrayList
-                            && ((ArrayList) foundNode).size() > arrayNum) {
-                            foundNode = ((ArrayList) foundNode).get(arrayNum);
+                            && ((ArrayList<?>) foundNode).size() > arrayNum) {
+                            foundNode = ((ArrayList<?>) foundNode).get(arrayNum);
                         } else
                             return null;
                     }
