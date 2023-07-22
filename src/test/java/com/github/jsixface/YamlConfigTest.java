@@ -16,6 +16,7 @@
 
 package com.github.jsixface;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -24,10 +25,16 @@ import static org.junit.Assert.*;
 
 public class YamlConfigTest {
     private final InputStream resource = getClass().getClassLoader().getResourceAsStream("test.yml");
+    private YamlConfig config;
+
+    @Before
+    public void loadResource() {
+        config = new YamlConfig(resource);
+        assertNotNull(resource);
+    }
 
     @Test
     public void getStringList() {
-        final YamlConfig config = YamlConfig.load(resource);
         final String value = config.getString("services.names");
         assertNotNull(value);
         assertEquals("Andrew", value);
@@ -35,7 +42,6 @@ public class YamlConfigTest {
 
     @Test
     public void getStringArray() {
-        final YamlConfig config = YamlConfig.load(resource);
         final String value = config.getString("services.names[1].first");
         assertNotNull(value);
         assertEquals("Andrew", value);
@@ -43,21 +49,18 @@ public class YamlConfigTest {
 
     @Test
     public void getStringOutOfIndex() {
-        final YamlConfig config = YamlConfig.load(resource);
         final String value = config.getString("services.names[3].first");
         assertNull(value);
     }
 
     @Test
     public void getStringInvalidKey() {
-        final YamlConfig config = YamlConfig.load(resource);
         final String value = config.getString("services.test.first");
         assertNull(value);
     }
 
     @Test
     public void getStringNumber() {
-        final YamlConfig config = YamlConfig.load(resource);
         final String value = config.getString("version");
         assertNotNull(value);
         assertEquals("3", value);
@@ -65,7 +68,6 @@ public class YamlConfigTest {
 
     @Test
     public void getString() {
-        final YamlConfig config = YamlConfig.load(resource);
         final String value = config.getString("services.db.image");
         assertNotNull(value);
         assertEquals("mysql", value);
@@ -73,7 +75,6 @@ public class YamlConfigTest {
 
     @Test
     public void getInt() {
-        final YamlConfig config = YamlConfig.load(resource);
         final int value = config.getInt("version");
         assertEquals(3, value);
     }

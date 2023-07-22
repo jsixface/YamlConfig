@@ -37,17 +37,15 @@ import static org.junit.Assert.assertTrue;
  * key: ${ENV_KEY:-someDefault}
  */
 public class YamlConfigWithEnvOverridesTest {
-
     public static final String ENV_OVERRIDE_VALUE = "my db image env value";
-    private final InputStream resource = getClass().getClassLoader().getResourceAsStream("testWithEnvOverrides.yml");
 
+    private final InputStream resource = getClass().getClassLoader().getResourceAsStream("testWithEnvOverrides.yml");
     private YamlConfig config;
 
     @Before
     public void setUp() {
         Yaml yaml = givenYamlInstanceWithEnvScalar();
-
-        config = YamlConfig.load(yaml, resource);
+        config = new YamlConfig(yaml, resource);
     }
 
     private Yaml givenYamlInstanceWithEnvScalar() {
