@@ -40,7 +40,6 @@ public class YamlConfig {
         this.content = yaml.load(reader);
     }
 
-
     /**
      * Create configuration from input stream
      *
