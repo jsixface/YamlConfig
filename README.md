@@ -2,11 +2,27 @@
 
 [![Build Status](https://travis-ci.com/jsixface/YamlConfig.svg?branch=master)](https://travis-ci.com/jsixface/YamlConfig)
 
-[Yaml](https://en.wikipedia.org/wiki/YAML) is a data serialization format similar to JSON but more human readable.
+[YAML](https://en.wikipedia.org/wiki/YAML) is a data serialization format similar to JSON but more human readable.
 It looks better to organize config in a YAML file since it makes sense to maintain some properties in a hierarchical
 manner.
 
 **YamlConfig** helps read configuration for a java project from a YAML config file and access them via dotted notation.
+
+## ⚠ DISCLAIMER ⚠
+
+This forks introduces breaking changes with upstream!
+
+```
+YamlConfig config = YamlConfig.load(resource);
+YamlConfig config = YamlConfig.load(yaml, resource);
+```
+
+is now:
+
+```
+YamlConfig config = new YamlConfig(resource);
+YamlConfig config = new YamlConfig(yaml, resource);
+```
 
 ## Features
 
@@ -72,6 +88,10 @@ If you want to get a list of strings, you can do the following:
 
 ```
 ArrayList<String> value = config.getList("services.list", String.class);
+```
+
+```
+ArrayList<String> value = config.getStringList("services.list");
 ```
 
 ## Usage - externally supplied Yaml
