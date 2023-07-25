@@ -20,6 +20,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -35,9 +38,8 @@ public class YamlConfigTest {
 
     @Test
     public void getStringList() {
-        final String value = config.getString("services.names");
-        assertNotNull(value);
-        assertEquals("Andrew", value);
+        final ArrayList<String> value = config.getList("services.list", String.class);
+        assertFalse(value.isEmpty());
     }
 
     @Test

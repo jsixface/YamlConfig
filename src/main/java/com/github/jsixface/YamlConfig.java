@@ -20,14 +20,14 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class YamlConfig {
     private final Pattern arrayKeyPattern = Pattern.compile("^([a-zA-Z][a-zA-Z0-9]+)\\[([0-9]+)]$");
+    private final Pattern keyPattern = Pattern.compile("^([a-zA-Z][a-zA-Z0-9]+)\\[([0-9]+)]$");
     private final Object content;
 
     /**
@@ -88,15 +88,38 @@ public class YamlConfig {
      * <code>null</code> if the key is not present or not a leaf node.
      */
     public Integer getInt(String key) {
-        Object foundNode = getNode(key);
-        if (foundNode instanceof Integer) {
-            return (Integer) foundNode;
+        Object node = getNode(key);
+        if (node instanceof Integer) {
+            return (Integer) node;
         }
         return null;
     }
 
     /**
-     * Goes through the file node by node until the desired key is found.
+     * Gets a type list value for the specified key from the config.
+     *
+     * @param key Key in dotted notation like <code>first.second</code>
+     * @return The type list value of property.
+     * <p>
+     * <code>null</code> if the key is not present or not a leaf node.
+     */
+    public <T> ArrayList<T> getList(String key, Class<T> type) {
+        final ArrayList<?> node = (ArrayList<?>) getNode(key);
+        final ArrayList<T> typeList = new ArrayList<>();
+        if (node != null) {
+            try {
+                node.forEach(o -> typeList.add(type.cast(o)));
+                return typeList;
+            } catch (ClassCastException exception) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets a node at the specific index.
+     * The key follows this pattern: my.key[index].entry
      *
      * @param key the key to find
      * @return the found node or <code>null</code> if not found
@@ -104,30 +127,33 @@ public class YamlConfig {
     private Object getNode(String key) {
         final String[] parts = splitByDot(key);
 
-        Object foundNode = content;
+        Object node = content;
         for (String part : parts) {
             int arrayNum = -1;
-            Matcher matcher = arrayKeyPattern.matcher(part);
-            if (matcher.matches()) {
-                part = matcher.group(1);
-                arrayNum = Integer.parseInt(matcher.group(2));
+            final Matcher arrayKeyPatternMatcher = arrayKeyPattern.matcher(part);
+            final Matcher keyPatternMatcher = keyPattern.matcher(part);
+            if (arrayKeyPatternMatcher.matches()) {
+                part = arrayKeyPatternMatcher.group(1);
+                arrayNum = Integer.parseInt(arrayKeyPatternMatcher.group(2));
+            } else if (keyPatternMatcher.matches()) {
+                part = keyPatternMatcher.group(1);
             }
-            if (foundNode instanceof Map) {
-                if (((Map<?, ?>) foundNode).containsKey(part)) {
-                    foundNode = ((Map<?, ?>) foundNode).get(part);
+            if (node instanceof Map) {
+                if (((Map<?, ?>) node).containsKey(part)) {
+                    node = ((Map<?, ?>) node).get(part);
                     if (arrayNum >= 0) {
-                        if (foundNode instanceof ArrayList
-                            && ((ArrayList<?>) foundNode).size() > arrayNum) {
-                            foundNode = ((ArrayList<?>) foundNode).get(arrayNum);
-                        } else
-                            return null;
+                        if (node instanceof ArrayList<?> && ((ArrayList<?>) node).size() > arrayNum) {
+                            node = ((ArrayList<?>) node).get(arrayNum);
+                        }
                     }
-                } else
+                } else {
                     return null;
+                }
             }
         }
-        return foundNode;
+        return node;
     }
+
 
     /**
      * Splits a key by the dot character.
