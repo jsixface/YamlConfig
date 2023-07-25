@@ -63,11 +63,10 @@ public class YamlConfig {
     /**
      * Gets the String value for the specified key from the config.
      *
-     * @param key Key in dotted notation like <code>first.second[2].third</code>
-     * @return The String value of property.
+     * @param key key in dotted notation like <code>first.second[2].third</code>
+     * @return the String value of property.
      * <p>
-     * <code>null</code> if the key is not present
-     * or not a leaf node.
+     * <code>null</code> if the key is not present or not a leaf node.
      * <p>
      * <code>Boolean</code> or <code>Integer</code> or another format is converted to String.
      */
@@ -82,8 +81,8 @@ public class YamlConfig {
     /**
      * Gets the Integer value for the specified key from the config.
      *
-     * @param key Key in dotted notation like <code>first.second[2].third</code>
-     * @return The Integer value of property.
+     * @param key key in dotted notation like <code>first.second[2].third</code>
+     * @return the Integer value of property.
      * <p>
      * <code>null</code> if the key is not present or not a leaf node.
      */
@@ -96,10 +95,22 @@ public class YamlConfig {
     }
 
     /**
-     * Gets a type list value for the specified key from the config.
+     * Gets a string list for the specified key from the config.
      *
-     * @param key Key in dotted notation like <code>first.second</code>
-     * @return The type list value of property.
+     * @param key key in dotted notation like <code>first.second</code>
+     * @return the type list value of property.
+     * <p>
+     * <code>null</code> if the key is not present or not a leaf node.
+     */
+    public ArrayList<String> getStringList(String key) {
+        return getList(key, String.class);
+    }
+
+    /**
+     * Gets a generic list for the specified key from the config.
+     *
+     * @param key key in dotted notation like <code>first.second</code>
+     * @return the generic list.
      * <p>
      * <code>null</code> if the key is not present or not a leaf node.
      */
@@ -118,10 +129,10 @@ public class YamlConfig {
     }
 
     /**
-     * Gets a node at the specific index.
+     * Gets a node by the key.
      * The key follows this pattern: my.key[index].entry
      *
-     * @param key the key to find
+     * @param key The key to find
      * @return the found node or <code>null</code> if not found
      */
     private Object getNode(String key) {
@@ -158,7 +169,7 @@ public class YamlConfig {
     /**
      * Splits a key by the dot character.
      *
-     * @param key the key to split
+     * @param key The key to split
      * @return the split key path.
      */
     private String[] splitByDot(String key) {
