@@ -16,62 +16,68 @@
 
 package com.github.jsixface;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class YamlConfigTest {
-    private InputStream resource = getClass().getClassLoader().getResourceAsStream("test.yml");
+    private final InputStream resource = getClass().getClassLoader().getResourceAsStream("test.yml");
+    private YamlConfig config;
+
+    @Before
+    public void loadResource() {
+        config = new YamlConfig(resource);
+        assertNotNull(resource);
+    }
 
     @Test
-    public void load() {
+    public void getStringList() {
+        final ArrayList<String> value = config.getList("services.list", String.class);
+        assertFalse(value.isEmpty());
     }
 
     @Test
     public void getStringArray() {
-        YamlConfig config = YamlConfig.load(resource);
-        String value = config.getString("services.names[1].first");
+        final String value = config.getString("services.names[1].first");
         assertNotNull(value);
         assertEquals("Andrew", value);
     }
 
     @Test
     public void getStringOutOfIndex() {
-        YamlConfig config = YamlConfig.load(resource);
-        String value = config.getString("services.names[3].first");
+        final String value = config.getString("services.names[3].first");
         assertNull(value);
     }
 
     @Test
     public void getStringInvalidKey() {
-        YamlConfig config = YamlConfig.load(resource);
-        String value = config.getString("services.test.first");
+        final String value = config.getString("services.test.first");
         assertNull(value);
     }
 
     @Test
     public void getStringNumber() {
-        YamlConfig config = YamlConfig.load(resource);
-        String value = config.getString("version");
+        final String value = config.getString("version");
         assertNotNull(value);
         assertEquals("3", value);
     }
 
     @Test
     public void getString() {
-        YamlConfig config = YamlConfig.load(resource);
-        String value = config.getString("services.db.image");
+        final String value = config.getString("services.db.image");
         assertNotNull(value);
         assertEquals("mysql", value);
     }
 
     @Test
     public void getInt() {
-        YamlConfig config = YamlConfig.load(resource);
-        Integer value = config.getInt("version");
-        assertNotNull(value);
-        assertEquals(Integer.valueOf(3), value);
+        final int value = config.getInt("version");
+        assertEquals(3, value);
     }
 }

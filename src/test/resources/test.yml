@@ -20,3 +20,6 @@ services:
       last: Justinson
     - first: Andrew
       last: Armstrong
+  list:
+    - "First"
+    - "Last"
