@@ -10,7 +10,7 @@ manner.
 
 ## ⚠ DISCLAIMER ⚠
 
-This forks introduces breaking changes with upstream!
+This fork introduces breaking changes with upstream!
 
 ```
 YamlConfig config = YamlConfig.load(resource);
