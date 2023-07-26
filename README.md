@@ -8,9 +8,9 @@ manner.
 
 **YamlConfig** helps read configuration for a java project from a YAML config file and access them via dotted notation.
 
-## ⚠ DISCLAIMER ⚠
+## ⚠ Warning:
 
-This fork introduces breaking changes with upstream!
+Version **1.2** introduces breaking changes as follows:
 
 ```
 YamlConfig config = YamlConfig.load(resource);
@@ -26,7 +26,7 @@ YamlConfig config = new YamlConfig(yaml, resource);
 
 ## Features
 
-- Uses SnakeYAML for reading YAML, so it can handle any data recognizable by SnakeYAML.
+- Use SnakeYAML for reading YAML, so it can handle any data recognizable by SnakeYAML.
 - Ease of access using dotted notation to read properties
 
 ## Getting Started
@@ -39,7 +39,7 @@ If you use Maven for Dependency management, you can include this using below dep
 <dependency>
   <groupId>com.github.jsixface</groupId>
   <artifactId>yamlconfig</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
 </dependency>
 ```
 
