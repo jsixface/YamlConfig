@@ -19,7 +19,7 @@ If you use Maven for Dependency management, you can include this using below dep
 <dependency>
   <groupId>com.github.jsixface</groupId>
   <artifactId>yamlconfig</artifactId>
-  <version>1.1</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 

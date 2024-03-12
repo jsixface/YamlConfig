@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 public class YamlConfig {
     private Object content;
-    private Pattern arrayKeyPattern = Pattern.compile("^([a-zA-Z][a-zA-Z0-9]+)\\[([0-9]+)]$");
+    private final Pattern arrayKeyPattern = Pattern.compile("^([a-zA-Z][a-zA-Z0-9]+)\\[([0-9]+)]$");
 
     private YamlConfig() {
     }
@@ -110,12 +110,12 @@ public class YamlConfig {
                 arrayNum = Integer.parseInt(matcher.group(2));
             }
             if (foundNode instanceof Map) {
-                if (((Map) foundNode).containsKey(part)) {
-                    foundNode = ((Map) foundNode).get(part);
+                if (((Map<?, ?>) foundNode).containsKey(part)) {
+                    foundNode = ((Map<?, ?>) foundNode).get(part);
                     if (arrayNum >= 0) {
                         if (foundNode instanceof ArrayList
-                                && ((ArrayList) foundNode).size() > arrayNum) {
-                            foundNode = ((ArrayList) foundNode).get(arrayNum);
+                                && ((ArrayList<?>) foundNode).size() > arrayNum) {
+                            foundNode = ((ArrayList<?>) foundNode).get(arrayNum);
                         } else
                             return null;
                     }
