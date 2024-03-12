@@ -23,7 +23,7 @@ import java.io.InputStream;
 import static org.junit.Assert.*;
 
 public class YamlConfigTest {
-    private InputStream resource = getClass().getClassLoader().getResourceAsStream("test.yml");
+    private final InputStream resource = getClass().getClassLoader().getResourceAsStream("test.yml");
 
     @Test
     public void load() {
