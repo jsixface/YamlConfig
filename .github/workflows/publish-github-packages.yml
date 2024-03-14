@@ -5,6 +5,8 @@ on:
 jobs:
   publish-jar:
     runs-on: ubuntu-latest
+    env:
+      DB_IMAGE: my db image env value
     steps:
       - name: Checkout
         uses: actions/checkout@v2
