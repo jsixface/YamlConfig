@@ -4,7 +4,6 @@ on:
       - master
 jobs:
   publish-jar:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
