@@ -22,6 +22,11 @@ If you use Maven for Dependency management, you can include this using below dep
   <version>1.2.0</version>
 </dependency>
 ```
+Or if you use Gradle, you can include this using below dependency.
+
+``` 
+implementation 'com.github.jsixface:yamlconfig:1.2.0'
+```
 
 ## Usage - internal Yaml
 Get an instance of the YamlConfig by passing in a reader or an inputstream.
