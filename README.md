@@ -1,5 +1,5 @@
 # YamlConfig
-[![Build Status](https://travis-ci.com/jsixface/YamlConfig.svg?branch=master)](https://travis-ci.com/jsixface/YamlConfig)
+[![Build Package](https://github.com/jsixface/YamlConfig/actions/workflows/build-package.yml/badge.svg)](https://github.com/jsixface/YamlConfig/actions/workflows/build-package.yml)
 
 [Yaml](https://en.wikipedia.org/wiki/YAML) is a data serialization format similar to JSON but more human readable. 
 It looks better to organize config in a YAML file since it makes sense to maintain some properties in a hierarchical manner.
